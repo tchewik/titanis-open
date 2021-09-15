@@ -15,7 +15,7 @@ Once you have run this command you can use the tool in your Python script:
 ```python
 >>> from titanis import Titanis
 >>>
->>> tt = Titanis()  # or Titanis(titanis_docker_server='remote_server_addr') if the containers are running on a remote server
+>>> tt = Titanis()  # or Titanis(host='remote_server_addr') if the containers are running on a remote server
 >>> text = 'Компьютерные игры могут помочь молодым людям приобрести важные для жизни навыки, хотя в чрезмерном увлечении ими есть и риски.'
 >>>
 >>> result = tt(text,

@@ -19,7 +19,7 @@ class Titanis:
             if required_modules not passed, ups all available modules """
         self.host = host
         self._create_required_module_list(udpipe, mystem, srl, rst, psy_cues, psy_dict, syntax, frustration_clf,
-                                          discourse, rosenzweig, depression_clf)
+                                          discourse)
         modules_args = {
             PsyCues: {'psy_cues_normalization': psy_cues_normalization},
             PsyDict: {'psy_dict_normalization': psy_dict_normalization},
