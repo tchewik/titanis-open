@@ -15,14 +15,12 @@ Once you have run this command you can use the tool in your Python script:
 ```python
 >>> from titanis import Titanis
 >>>
->>> tt = Titanis()  # or Titanis(host='remote_server_addr') if the containers are running on a remote server
->>> text = 'Компьютерные игры могут помочь молодым людям приобрести важные для жизни навыки, хотя в чрезмерном увлечении ими есть и риски.'
+>>> tt = Titanis(psy_cues=True, psy_cues_normalization='words',
+                 psy_dict=True, psy_dict_normalization='abs',
+                 syntax=True,
+                 discourse=False, discourse_long_texts_only=True,
+                 frustration_clf=True)  # use host='remote_host' if the containers are running on a remote server
 >>>
->>> result = tt(text,
-                psy_cues=True, psy_cues_normalization='words',
-                psy_dict=True, psy_dict_normalization='abs',
-                syntax=True,
-                discourse=False, discourse_long_texts_only=True,
-                frustration_clf=True,
-)
+>>> text = 'Компьютерные игры могут помочь молодым людям приобрести важные для жизни навыки, хотя в чрезмерном увлечении ими есть и риски.'
+>>> result = tt(text)
 ```
