@@ -5,7 +5,7 @@ This Python 3 library provides a tool for complex psycho-emotional analysis of t
 ## Installation
 
 To install the library and dependencies, run the command:
-``pip install -U .``
+``sudo apt-get install python-dev build-essential && pip install -U .``
 
 You should also run the docker containers on the same or remote machine with the command:
 ``docker-compose up -d``
@@ -22,7 +22,7 @@ Once you have run this command you can use the tool in your Python script:
                 psy_cues=True, psy_cues_normalization='words',
                 psy_dict=True, psy_dict_normalization='abs',
                 syntax=True,
-                discourse=False, discourse_long_texts_only=False,
-                rosenzweig=True
+                discourse=False, discourse_long_texts_only=True,
+                frustration_clf=True,
 )
 ```

@@ -1,0 +1,31 @@
+version: '3.3'
+
+services:
+  udpipe:
+    labels:
+      name: isanlp_udpipe
+    image: tchewik/isanlp_udpipe
+    ports:
+      - 3134:3333
+
+  srl_framebank:
+    labels:
+      name: isanlp_srl_framebank
+    image: inemo/isanlp_srl_framebank
+    ports:
+      - 3135:3333
+
+  rst:
+    labels:
+      name: isanlp_rst
+    image: tchewik/isanlp_rst
+    restart: always
+    ports:
+      - 3136:3333
+
+  frustration:
+    labels:
+      name: clf_frustration
+    image: tchewik/titanis_frustration
+    ports:
+      - 3137:3137
