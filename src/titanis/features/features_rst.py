@@ -10,16 +10,17 @@ class FeaturesRST(BaseDockerExtractor):
 
     def __init__(self, host, discourse_long_text_only=False):
         super().__init__(host=host)
-        strange_dict = {0: DummyProcessor(output={'rst': []})}
 
-        if discourse_long_text_only:
-            strange_dict[1] = DummyProcessor(output={'rst': []})
+        pipeline_variants = {0: DummyProcessor(output={'rst': []}),
+                             1: ProcessorRemote(host=host, port=self.PORT, pipeline_name='default')}
+        condition = lambda _te, _to, sentences, _po, _mo, _le, _sy: not discourse_long_text_only or (
+            discourse_long_text_only and len(sentences) > 1)
 
         self.pipeline = PipelineCommon([(
             PipelineConditional(
-                (lambda text, tokens, sentences, postag, morph, lemma, syntax: len(sentences)),
-                strange_dict,
-                default_ppl=ProcessorRemote(host=host, port=self.PORT, pipeline_name='default')
+                condition,
+                pipeline_variants,
+                default_ppl=pipeline_variants[1]
             ),
             ['text', 'tokens', 'sentences', 'postag_mys', 'morph_mys', 'lemma_ud', 'syntax_dep_tree_ud'],
             {'rst': 'rst'}
