@@ -18,7 +18,7 @@ services:
   rst:
     labels:
       name: isanlp_rst
-    image: tchewik/isanlp_rst
+    image: tchewik/isanlp_rst:1.2
     restart: always
     ports:
       - 3136:3333
@@ -29,3 +29,10 @@ services:
     image: tchewik/titanis_frustration
     ports:
       - 3137:3137
+
+  emotive_srl:
+    labels:
+      name: emotive_srl_api
+    image: rexhaif/emotive-srl-api:latest
+    ports:
+      - 8081:8000

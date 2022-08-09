@@ -28,6 +28,8 @@ class FeaturesDiscourse(BaseFeaturesExtractor):
 
     def __call__(self, rst) -> dict:
         result = dict()
+        if not rst:
+            return result
 
         for feature in self.features_list:
             result[feature.__name__] = feature(rst)

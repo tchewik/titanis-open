@@ -17,9 +17,9 @@ class FeaturesUDPipe(BaseDockerExtractor):
             ['text'],
             {'sentences': 'sentences',
              'tokens': 'tokens',
-             'lemma': 'lemma_udp',
-             'syntax_dep_tree': 'syntax_dep_tree_udp',
-             'postag': 'postag_udp'}
+             'lemma': 'lemma_ud',
+             'syntax_dep_tree': 'syntax_dep_tree_ud',
+             'postag': 'postag_ud'}
         )])
 
     def __call__(self, text) -> dict:

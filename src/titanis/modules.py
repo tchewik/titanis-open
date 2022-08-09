@@ -1,8 +1,8 @@
 from collections import namedtuple
 from time import time
-from typing import *
+from typing import Tuple, Type, Union, List
 
-from .features import *
+from . import features
 
 __all__ = (
     'up_modules',
@@ -16,7 +16,8 @@ __all__ = (
     'PsyDict',
     'Syntax',
     'Frustration',
-    'Discourse'
+    'Discourse',
+    'EmotiveSRL',
 )
 
 Dependency = namedtuple('Dependency', ['module', 'data_name'])
@@ -30,14 +31,15 @@ class ModuleData(dict):
 class Module:
     def __init__(
             self, name: str,
-            extractor_cls: Type[BaseFeaturesExtractor],
-            dependencies: List[Union[Dependency]]):
+            extractor_cls: Type[features.BaseFeaturesExtractor],
+            dependencies: List[Union[Dependency, Tuple]]):
         self.name = name
         self.dependencies = dependencies
         self._extractor_cls = extractor_cls
         self._extractor = None
         self._elapsed_time = False
-        self._is_host_required = issubclass(self._extractor_cls, BaseDockerExtractor)
+        self._is_host_required = issubclass(self._extractor_cls, features.BaseDockerExtractor) or issubclass(
+            self._extractor_cls, features.EmotiveSRLFeaturesExtractor)
 
     def up(self, host, elapsed_time, **kwargs):
         self._elapsed_time = elapsed_time
@@ -67,19 +69,19 @@ class Module:
 
 Endpoint = Module(
     name='Endpoint',
-    extractor_cls=DummyFeaturesExtractor,
+    extractor_cls=features.DummyFeaturesExtractor,
     dependencies=[]
 )
 
 UDPipe = Module(
     name='UDPipe',
-    extractor_cls=FeaturesUDPipe,
+    extractor_cls=features.FeaturesUDPipe,
     dependencies=[Dependency(Endpoint, 'text')]
 )
 
 Mystem = Module(
     name='Mystem',
-    extractor_cls=FeaturesMystem,
+    extractor_cls=features.FeaturesMystem,
     dependencies=[
         Dependency(UDPipe, 'tokens'),
         Dependency(UDPipe, 'sentences')
@@ -88,33 +90,33 @@ Mystem = Module(
 
 SRL = Module(
     name='SRL',
-    extractor_cls=FeaturesSRL,
+    extractor_cls=features.FeaturesSRL,
     dependencies=[
         Dependency(UDPipe, 'tokens'),
         Dependency(Mystem, 'postag_mys'),
         Dependency(Mystem, 'morph_mys'),
-        Dependency(UDPipe, 'lemma_udp'),
-        Dependency(UDPipe, 'syntax_dep_tree_udp')
+        Dependency(UDPipe, 'lemma_ud'),
+        Dependency(UDPipe, 'syntax_dep_tree_ud')
     ]
 )
 
 RST = Module(
     name='RST',
-    extractor_cls=FeaturesRST,
+    extractor_cls=features.FeaturesRST,
     dependencies=[
         Dependency(Endpoint, 'text'),
         Dependency(UDPipe, 'tokens'),
         Dependency(UDPipe, 'sentences'),
         Dependency(Mystem, 'postag_mys'),
         Dependency(Mystem, 'morph_mys'),
-        Dependency(UDPipe, 'lemma_udp'),
-        Dependency(UDPipe, 'syntax_dep_tree_udp')
+        Dependency(UDPipe, 'lemma_ud'),
+        Dependency(UDPipe, 'syntax_dep_tree_ud')
     ]
 )
 
 PsyCues = Module(
     name='PsyCues',
-    extractor_cls=FeaturesPsyCues,
+    extractor_cls=features.FeaturesPsyCues,
     dependencies=[(Endpoint, 'text'),
                   (Mystem, 'lemma_mys'),
                   (Mystem, 'postag_mys_unconverted')]
@@ -122,26 +124,35 @@ PsyCues = Module(
 
 PsyDict = Module(
     name='PsyDict',
-    extractor_cls=FeaturesPsyDict,
+    extractor_cls=features.FeaturesPsyDict,
     dependencies=[(Mystem, 'lemma_mys')]
 )
 
 Syntax = Module(
     name='Syntax',
-    extractor_cls=FeaturesSyntax,
-    dependencies=[Dependency(UDPipe, 'syntax_dep_tree_udp')]
+    extractor_cls=features.FeaturesSyntax,
+    dependencies=[Dependency(UDPipe, 'syntax_dep_tree_ud')]
 )
 
 Frustration = Module(
     name='Frustration',
-    extractor_cls=ClassifierFrustration,
+    extractor_cls=features.ClassifierFrustration,
     dependencies=[Dependency(Endpoint, 'text')]
 )
 
 Discourse = Module(
     name='Discourse',
-    extractor_cls=FeaturesDiscourse,
+    extractor_cls=features.FeaturesDiscourse,
     dependencies=[Dependency(RST, 'rst')]
+)
+
+EmotiveSRL = Module(
+    name='EmotiveSRL',
+    extractor_cls=features.EmotiveSRLFeaturesExtractor,
+    dependencies=[
+        Dependency(RST, 'rst'),
+    ],
+
 )
 
 AVAILABLE_MODULES = (
@@ -154,6 +165,7 @@ AVAILABLE_MODULES = (
     Syntax,
     Frustration,
     Discourse,
+    EmotiveSRL
 )
 
 

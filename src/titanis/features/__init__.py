@@ -13,6 +13,7 @@ from .features_psy_dict import FeaturesPsyDict
 from .features_syntax import FeaturesSyntax
 from .classifier_frustration import ClassifierFrustration
 from .features_discourse import FeaturesDiscourse
+from .emotive_srl_features_extractor import EmotiveSRLFeaturesExtractor
 
 __all__ = (
     'BaseFeaturesExtractor',
@@ -28,4 +29,5 @@ __all__ = (
     'FeaturesSyntax',
     'ClassifierFrustration',
     'FeaturesDiscourse',
+    'EmotiveSRLFeaturesExtractor'
 )

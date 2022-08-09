@@ -8,18 +8,17 @@ class Titanis:
             self, host='172.17.0.1',
             # main modules
             psy_cues=False, psy_dict=False, syntax=False, frustration_clf=False, discourse=False,
-            rosenzweig=False, depression_clf=False,
             # additional args
             psy_cues_normalization='words', psy_dict_normalization='words', discourse_long_text_only=False,
             elapsed_time=False,
             # 0-level analyzers modules
-            udpipe=False, mystem=False, srl=False, rst=False
+            udpipe=False, mystem=False, srl=False, rst=False, emotive_srl=False,
     ):
         """ Pass host = 'remote.server.ru' to run Titanis in remote server
             if required_modules not passed, ups all available modules """
         self.host = host
         self._create_required_module_list(udpipe, mystem, srl, rst, psy_cues, psy_dict, syntax, frustration_clf,
-                                          discourse)
+                                          discourse, emotive_srl)
         modules_args = {
             PsyCues: {'psy_cues_normalization': psy_cues_normalization},
             PsyDict: {'psy_dict_normalization': psy_dict_normalization},
@@ -36,10 +35,10 @@ class Titanis:
         return module_manager(text)
 
     def _create_required_module_list(self, udpipe, mystem, srl, rst, psy_cues, psy_dict, syntax, frustration_clf,
-                                     discourse):
+                                     discourse, emotive_srl):
         self.required_module_list = []
         for module_is_required, module in zip(
-                (udpipe, mystem, srl, rst, psy_cues, psy_dict, syntax, frustration_clf, discourse),
+                (udpipe, mystem, srl, rst, psy_cues, psy_dict, syntax, frustration_clf, discourse, emotive_srl),
                 AVAILABLE_MODULES
         ):
             if module_is_required:
