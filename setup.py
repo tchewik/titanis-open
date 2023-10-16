@@ -18,7 +18,7 @@ def read(*names, **kwargs):
 
 setup(
     name='titanis',
-    version='0.0.1-open',
+    version='0.0.1+open',
     description='ISA library for text mining.',
     author='ISA RAS',
     author_email='',
