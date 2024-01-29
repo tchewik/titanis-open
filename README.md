@@ -1,7 +1,7 @@
 # TITANIS
 
 This Python library provides a tool for complex psycho-emotional analysis of texts in
-Russian. [API documentation](docs/API.pdf).
+Russian. [API documentation](docs/TITANIS%20API.pdf).
 
 ## Requirements
 
