@@ -18,7 +18,7 @@ services:
   rst:
     labels:
       name: isanlp_rst
-    image: tchewik/isanlp_rst:1.2
+    image: tchewik/isanlp_rst:3.0-rstreebank
     restart: always
     ports:
       - 3136:3333
