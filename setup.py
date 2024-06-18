@@ -27,5 +27,5 @@ setup(
     data_files=[('titanis/data', ['src/titanis/data/psydicts.json'])],
     include_package_data=True,
     zip_safe=False,
-    install_requires=['isanlp @ git+https://github.com/IINemo/isanlp.git', 'nltk', 'pymystem3']
+    install_requires=['isanlp @ git+https://github.com/IINemo/isanlp.git', 'nltk', 'pymystem3', 'numpy==1.26.4']
 )

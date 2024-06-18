@@ -9,7 +9,7 @@ class Titanis:
             # main modules
             psy_cues=False, psy_dict=False, syntax=False, frustration_clf=False, discourse=False,
             # additional args
-            psy_cues_normalization='words', psy_dict_normalization='words', discourse_long_text_only=False,
+            psy_cues_normalization='words', psy_dict_normalization='words',
             elapsed_time=False,
             # 0-level analyzers modules
             udpipe=False, mystem=False, srl=False, rst=False, emotive_srl=False,
@@ -22,7 +22,6 @@ class Titanis:
         modules_args = {
             PsyCues: {'psy_cues_normalization': psy_cues_normalization},
             PsyDict: {'psy_dict_normalization': psy_dict_normalization},
-            RST: {'discourse_long_text_only': discourse_long_text_only}
         }
         up_modules(self.host, modules_args, self.required_module_list, elapsed_time)
 

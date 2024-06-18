@@ -5,7 +5,7 @@ Russian. [API documentation](docs/TITANIS%20API.pdf).
 
 ## Requirements
 
-- python 3.9
+- python >= 3.9
 - docker >= 17.06
 - docker-compose >= 1.8.0
 

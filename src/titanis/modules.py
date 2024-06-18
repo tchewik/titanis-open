@@ -105,12 +105,6 @@ RST = Module(
     extractor_cls=features.FeaturesRST,
     dependencies=[
         Dependency(Endpoint, 'text'),
-        Dependency(UDPipe, 'tokens'),
-        Dependency(UDPipe, 'sentences'),
-        Dependency(Mystem, 'postag_mys'),
-        Dependency(Mystem, 'morph_mys'),
-        Dependency(UDPipe, 'lemma_ud'),
-        Dependency(UDPipe, 'syntax_dep_tree_ud')
     ]
 )
 
